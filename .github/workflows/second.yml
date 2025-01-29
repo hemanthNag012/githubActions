@@ -1,0 +1,11 @@
+name: second action
+
+on: push
+
+jobs:
+  job1:
+    name: print date on job one
+    runs-on: ubuntu-latest
+    steps:
+      -name: get current date
+       run: echo "::set-output name=date::$(date + %Y-%m-%d)"
