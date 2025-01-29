@@ -7,5 +7,5 @@ jobs:
     name: print date on job one
     runs-on: ubuntu-latest
     steps:
-      -name: get current date
-       run: date +%Y-%m-%d
+      - name: print current date
+        run: date +%Y-%m-%d
