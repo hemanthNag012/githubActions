@@ -23,3 +23,11 @@ jobs:
     steps:
       - name: print date on macos
         run: date "+%Y-%m-%d"
+
+  job4:
+    name: dependent date print
+    runs-on: windows-latest
+    needs: [job1, job2, job3]
+    steps:
+      - name: print date
+        run: echo "All jobs successful on" %DATE%   
