@@ -8,7 +8,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -name: get current date
-       id: date_step
-       run: echo "::set-output name=date::$(date + %Y-%m-%d)"
-      -name: print date
-       run: echo "The current date is ${{steps.date_step.output.date}}" 
+      run: date +%Y-%m-%d
