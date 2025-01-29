@@ -9,7 +9,7 @@ jobs:
     env:
       JOB_ENV_NAME: 'UBUNTU env'
       REQUEST: 'push2'
-    name: print date on job one
+    name: print env values on job one
     runs-on: ubuntu-latest
     steps:
       - name: print env vars
@@ -34,11 +34,11 @@ jobs:
           echo "12. ${{ env.REQUEST }}"
 
   job2:
-    name: print date on windows
-    runs-on: windows-latest
+    name: use secrets
+    runs-on: ubuntu-latest
     steps:
-      - name: print current date on windows
-        run: echo %DATE%
+      - name: Configure secrets
+        run: echo ${{ secrets.SECRET_ID }}
 
   job3:
     name: print date on macOS
