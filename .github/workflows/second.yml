@@ -8,4 +8,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -name: get current date
-      run: date +%Y-%m-%d
+       run: date +%Y-%m-%d
