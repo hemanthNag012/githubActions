@@ -8,12 +8,12 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - name: Set up C++
-        uses: actions/setup-cpp@v1
+        uses: llvm/llvm-project@v0.0.1
         with:
-          cpp-version: '10'
+          version: '10'
 
       - name: Check for changed C++ files
         id: check_files
