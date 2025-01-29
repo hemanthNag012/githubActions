@@ -9,3 +9,17 @@ jobs:
     steps:
       - name: print current date
         run: date +%Y-%m-%d
+
+  job2:
+    name: print date on windows
+    runs-on: windows-latest
+    steps:
+      - name: print current date on windows
+        run: echo %DATE%
+
+  job3:
+    name: print date on macOS
+    runs-on: macos-latest
+    steps:
+      - name: print date on macos
+        run: date "+%Y-%m-%d"
