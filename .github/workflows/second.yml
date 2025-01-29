@@ -32,7 +32,6 @@ jobs:
           echo "10. ${{ env.REQUEST }}"
           echo "11. ${{ env.STEP_ENV_VAR }}"
           echo "12. ${{ env.REQUEST }}"
-        run: date +%Y-%m-%d
 
   job2:
     name: print date on windows
