@@ -9,10 +9,8 @@ jobs:
     steps:
       - name: Step one
         uses: actions/checkout@v2
-      - name: CPP Evaluation
-  # You may pin to the exact commit or the version.
-  # uses: lukeely/cpp-evaluation-action@db42971265834124c705a5e737ad09cffe335071
-        uses: lukeely/cpp-evaluation-action@0.0.1
+      - name: C/C++ Linter
+        uses: cpp-linter/cpp-linter-action@v2.13.4
           
   job2:
     name: second job
