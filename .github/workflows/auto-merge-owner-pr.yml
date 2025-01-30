@@ -4,30 +4,21 @@ on: pull_request
 
 jobs:
   syntax_check:
-    name: Check C++ Syntax
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
 
-      - name: Get changed C++ files
-        id: changed_files
+      - name: Configure Build
+        run: cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON . 
+
+      - name: Build
+        run: make
+
+      - name: Run Clang-Tidy
+        if: steps.check_changes.outputs.has_changes == 'true'
         run: |
-          changed_cpp_files=$(git diff --name-only --diff-filter=d HEAD^ HEAD | grep '\.cpp$' | tr '\n' ' ')
-          echo "changed_cpp_files=$changed_cpp_files" >> $GITHUB_OUTPUT
-
-      - name: Check if any C++ files changed
-        id: check_changes
-        if: steps.changed_files.outputs.changed_cpp_files != ''
-        run: echo "::set-output name=has_changes::true"
-
-      - name: Run clang-tidy (or similar)
-        if: steps.check_changes.outputs.has_changes == 'true'  # Only run if changes exist
-        uses: DoSomething/clang-tidy-action@v1 # Example action; replace with your preferred linter
-        with:
-          files: ${{ steps.changed_files.outputs.changed_cpp_files }}
-          # Add other clang-tidy options as needed
+          for file in ${{ steps.changed_files.outputs.changed_cpp_files }}; do
+            clang-tidy -p . $file --fix # -p . assumes compile_commands.json is in root
+          done
 
       - name: Skip check (no changes)
         if: steps.check_changes.outputs.has_changes != 'true'
