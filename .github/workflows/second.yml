@@ -1,56 +1,50 @@
-name: second action
-env:
-  WORKSPACE_ENV_VAR: 'Github actions'
-  REQUEST: 'push'
-on: push
+# name: second action
+# env:
+#   WORKSPACE_ENV_VAR: 'Github actions'
+#   REQUEST: 'push'
+# on: push
 
-jobs:
-  job1:
-    env:
-      JOB_ENV_NAME: 'UBUNTU env'
-      REQUEST: 'push2'
-    name: print env values on job one
-    runs-on: ubuntu-latest
-    steps:
-      - name: print env vars
-        env:
-          STEP_ENV_VAR: 'Bash env'
-          REQUEST: 'PUSH3'
-        run: |
-          echo "Print vars using shell syntax"
-          echo "1. $WORKSPACE_ENV_VAR"
-          echo "2. $REQUEST" 
-          echo "3. $JOB_ENV_NAME"
-          echo "4. $REQUEST"
-          echo "5. $STEP_ENV_VAR"
-          echo "6. $REQUEST"
-          echo "------------------------------"
-          echo "Print vars using yaml syntax"
-          echo "7. ${{ env.WORKSPACE_ENV_VAR }}"
-          echo "8. ${{ env.REQUEST }}"
-          echo "9. ${{ env.JOB_ENV_NAME }}"
-          echo "10. ${{ env.REQUEST }}"
-          echo "11. ${{ env.STEP_ENV_VAR }}"
-          echo "12. ${{ env.REQUEST }}"
+# jobs:
+#   job1:
+#     env:
+#       JOB_ENV_NAME: 'UBUNTU env'
+#       REQUEST: 'push2'
+#     name: print env values on job one
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: print env vars
+#         env:
+#           STEP_ENV_VAR: 'Bash env'
+#           REQUEST: 'PUSH3'
+#         run: |
+#           echo "Print vars using shell syntax"
+#           echo "1. $WORKSPACE_ENV_VAR"
+#           echo "2. $REQUEST" 
+#           echo "3. $JOB_ENV_NAME"
+#           echo "4. $REQUEST"
+#           echo "5. $STEP_ENV_VAR"
+#           echo "6. $REQUEST"
+#           echo "------------------------------"
+#           echo "Print vars using yaml syntax"
+#           echo "7. ${{ env.WORKSPACE_ENV_VAR }}"
+#           echo "8. ${{ env.REQUEST }}"
+#           echo "9. ${{ env.JOB_ENV_NAME }}"
+#           echo "10. ${{ env.REQUEST }}"
+#           echo "11. ${{ env.STEP_ENV_VAR }}"
+#           echo "12. ${{ env.REQUEST }}"
 
-  job2:
-    name: use secrets
-    runs-on: ubuntu-latest
-    steps:
-      - name: Configure secrets
-        run: echo ${{ secrets.SECRET_ID }}
+#   # job2:
+#   #   name: use secrets
+#   #   runs-on: ubuntu-latest
+#   #   steps:
+#   #     - name: Configure secrets
+#   #       run: echo ${{ secrets.SECRET_ID }}
 
-  job3:
-    name: print date on macOS
-    runs-on: macos-latest
-    steps:
-      - name: print date on macos
-        run: date "+%Y-%m-%d"
 
-  job4:
-    name: dependent date print
-    runs-on: windows-latest
-    needs: [job1, job2, job3]
-    steps:
-      - name: print date
-        run: echo "All jobs successful on" %DATE%   
+#   # job4:
+#   #   name: dependent date print
+#   #   runs-on: windows-latest
+#   #   needs: [job1, job2, job3]
+#   #   steps:
+#   #     - name: print date
+#   #       run: echo "All jobs successful on" %DATE%   
