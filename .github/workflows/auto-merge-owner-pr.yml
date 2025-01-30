@@ -8,7 +8,7 @@ jobs:
     steps:
 
       - name: Configure Build
-        run: cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON . 
+        run: cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 
       - name: Build
         run: make
