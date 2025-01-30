@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: python helloworld.py
+      - run: python ./programs/helloworld.py
 
   build:
     needs: [test]
