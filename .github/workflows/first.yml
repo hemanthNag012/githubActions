@@ -12,12 +12,4 @@ jobs:
       - name: C/C++ Linter
         uses: cpp-linter/cpp-linter-action@v2.13.4
           
-  job2:
-    name: second job
-    runs-on: windows-latest
-    steps:
-      - name: Step one
-        uses: actions/checkout@v2
-      - name: Step two
-        run: "Get-ChildItem Env: | Sort-Object Name"
                   

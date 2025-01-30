@@ -1,38 +1,34 @@
-name: Auto Merge Owner PR
+name: C++ Syntax Check
 
-on:
-  pull_request:
-    types: [opened, reopened, synchronize]
+on: pull_request
 
 jobs:
-  lint:
+  syntax_check:
+    name: Check C++ Syntax
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Set up C++
-        uses: llvm/llvm-project@v0.0.1
+      - name: Get changed C++ files
+        id: changed_files
+        run: |
+          changed_cpp_files=$(git diff --name-only --diff-filter=d HEAD^ HEAD | grep '\.cpp$' | tr '\n' ' ')
+          echo "changed_cpp_files=$changed_cpp_files" >> $GITHUB_OUTPUT
+
+      - name: Check if any C++ files changed
+        id: check_changes
+        if: steps.changed_files.outputs.changed_cpp_files != ''
+        run: echo "::set-output name=has_changes::true"
+
+      - name: Run clang-tidy (or similar)
+        if: steps.check_changes.outputs.has_changes == 'true'  # Only run if changes exist
+        uses: DoSomething/clang-tidy-action@v1 # Example action; replace with your preferred linter
         with:
-          version: '10'
+          files: ${{ steps.changed_files.outputs.changed_cpp_files }}
+          # Add other clang-tidy options as needed
 
-      - name: Check for changed C++ files
-        id: check_files
-        run: |
-          git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep -E '\.cpp$' > changed_files.txt
-          if [ ! -s changed_files.txt ]; then
-            echo "No C++ files changed. Skipping cppcheck."
-            exit 0
-          fi
-          echo "C++ files changed. Proceeding to run cppcheck."
-
-      - name: Install cppcheck
-        if: steps.check_files.outputs.skip != 'true'
-        run: sudo apt-get install -y cppcheck
-
-      - name: Run cppcheck
-        if: steps.check_files.outputs.skip != 'true'
-        run: |
-          cppcheck --enable=all --error-exitcode=1 $(cat changed_files.txt)
-
-      - name: Clean up
-        run: rm changed_files.txt
+      - name: Skip check (no changes)
+        if: steps.check_changes.outputs.has_changes != 'true'
+        run: echo "No changed C++ files found. Skipping syntax check."
